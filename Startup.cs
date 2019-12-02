@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using AspNetCoreTodo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AspNetCoreTodo.Services;
 
 namespace AspNetCoreTodo
 {
@@ -41,7 +42,7 @@ namespace AspNetCoreTodo
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.AddScoped<ITodoItemService, FakeTodoItemService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -70,7 +71,7 @@ namespace AspNetCoreTodo
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Todo}/{action=Index}/{id?}");
             });
         }
     }
